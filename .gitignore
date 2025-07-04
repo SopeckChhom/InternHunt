@@ -1,0 +1,26 @@
+# Node
+node_modules/
+dist/
+.env
+.env.local
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+*.env
+
+# Amplify
+amplify/.config
+amplify/#current-cloud-backend
+amplify/backend/amplify-meta.json
+amplify/backend/awscloudformation/
+
+# VSCode & system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Git
+*.log
