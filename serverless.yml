@@ -1,0 +1,48 @@
+service: internship-tracker
+
+provider:
+  name: aws
+  runtime: python3.11
+  region: us-west-2
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - arn:aws:dynamodb:us-west-2:*:table/InternshipApplications
+
+functions:
+  createApplication:
+    handler: app.create_application
+    events:
+      - http:
+          path: applications
+          method: post
+          cors: true
+  listApplications:
+    handler: app.list_applications
+    events:
+      - http:
+          path: applications
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    InternshipApplicationsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: InternshipApplications
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
